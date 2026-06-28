@@ -94,17 +94,789 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.97);backdrop-fi
 .bracket-rounds-row{display:flex;gap:0}
 .br-round{display:flex;flex-direction:column;position:relative}
 .br-round-hdr{text-align:center;padding:.6rem .4rem;font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:2px;color:var(--gold);background:var(--navy-light);border-bottom:1px solid var(--border);border-right:1px solid var(--border);white-space:nowrap}
-.br-matches-col{display:flex;flex-direction:column;justify-content:space-around;flex:1;padding:.5rem .35rem;border-right:1px solid var(--border)}
+.br-matches-col{display:flex;flex-direction:column;justify-content:space-around;flex:1;padding:.5rem .35rem;border-right:1px solid var(--border);background:var(--surface)}
+.br-match{background:var(--navy-mid);border:1px solid rgba(201,168,76,.25);border-radius:6px;overflow:hidden;margin:3px 0;position:relative;cursor:pointer;transition:border-color .2s}
+.br-match:hover{border-color:var(--gold)}
+.br-match-row{display:flex;align-items:center;padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.06);gap:6px;min-height:28px}
+.br-match-row:last-child{border-bottom:none}
+.br-match-row.won{background:rgba(201,168,76,.1)}
+.br-match-row.lost{opacity:.55}
+.br-flag{font-size:1rem;line-height:1;flex-shrink:0}
+.br-name{font-size:.68rem;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.br-score{font-family:'Roboto Mono',monospace;font-size:.72rem;font-weight:700;min-width:16px;text-align:right;color:var(--gold)}
+.br-match-row.won .br-score{color:var(--gold)}
+.br-tbd{font-size:.65rem;color:var(--grey);font-style:italic;padding:6px 8px}
+.br-connector-area{display:flex;flex-direction:column;justify-content:space-around;padding:.5rem 0;width:20px;background:var(--surface)}
+.br-line{flex:1;border-right:2px solid rgba(201,168,76,.18)}
+/* Trophy center */
+.bracket-trophy{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;background:var(--surface);border-right:1px solid var(--border)}
+.bracket-trophy-inner{background:rgba(201,168,76,.1);border:2px solid var(--gold);border-radius:10px;padding:1.2rem;text-align:center;min-width:110px}
+.bracket-trophy-icon{font-size:2.5rem;margin-bottom:.4rem}
+.bracket-trophy-lbl{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:2px;color:var(--gold)}
+.bracket-trophy-date{font-size:.6rem;color:var(--grey);margin-top:4px}
+
+/* PREDICTOR */
+.predictor-layout{display:grid;grid-template-columns:280px 1fr;gap:1.5rem}
+.team-select-list{display:flex;flex-direction:column;gap:.35rem;max-height:720px;overflow-y:auto}
+.team-select-list::-webkit-scrollbar{width:4px}
+.team-select-list::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:2px}
+.team-select-btn{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.55rem .8rem;cursor:pointer;text-align:left;color:var(--white);font-family:'Inter',sans-serif;font-size:.8rem;font-weight:500;transition:all .15s}
+.team-select-btn:hover{border-color:rgba(201,168,76,.5);background:var(--surface-raised)}
+.team-select-btn.selected{border-color:var(--gold);background:rgba(201,168,76,.1)}
+.analysis-hero{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1rem}
+.analysis-team-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.analysis-flag{font-size:3.2rem}
+.analysis-team-name{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:3px;color:var(--white);line-height:1}
+.analysis-team-sub{font-size:.78rem;color:var(--grey);margin-top:4px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.stat-box{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:.8rem;text-align:center}
+.stat-box .val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);line-height:1}
+.stat-box .lbl{font-size:.6rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--grey);margin-top:4px}
+.radar-section{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.prob-row{display:flex;align-items:center;gap:.8rem;margin-bottom:.7rem}
+.prob-label{font-size:.72rem;font-weight:600;color:var(--grey);min-width:130px}
+.prob-bar-bg{flex:1;height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+.prob-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold-dark),var(--gold));transition:width .8s cubic-bezier(.16,1,.3,1)}
+.prob-pct{font-family:'Roboto Mono',monospace;font-size:.78rem;font-weight:600;color:var(--gold-light);min-width:42px;text-align:right}
+
+/* RESULTS */
+.results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1rem}
+.result-match{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.result-match-head{background:var(--navy-light);padding:.4rem .8rem;font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--grey);display:flex;justify-content:space-between}
+.result-teams{display:flex;align-items:center;padding:.8rem 1rem;gap:.5rem}
+.result-team{flex:1;display:flex;align-items:center;gap:6px}
+.result-team.right{flex-direction:row-reverse;justify-content:flex-start}
+.result-team-flag{font-size:1.4rem}
+.result-team-name{font-weight:600;font-size:.84rem}
+.result-score{display:flex;gap:4px;align-items:center;font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--white)}
+.result-score .sep{font-size:1rem;color:var(--grey);margin:0 2px}
+.result-score .win{color:var(--gold)}
+.result-team.winner .result-team-name{color:var(--gold)}
+.result-tbd{text-align:center;padding:.5rem;color:var(--grey);font-style:italic;font-size:.76rem;border-top:1px solid var(--border)}
+
+/* ───── AWARDS SECTION ───── */
+.awards-hero{background:linear-gradient(135deg,#0A1628,#1a1028);border:1px solid var(--border);border-radius:12px;padding:2rem;margin-bottom:2rem;text-align:center;position:relative;overflow:hidden}
+.awards-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(201,168,76,.1),transparent)}
+.awards-hero-title{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:4px;color:var(--gold);position:relative}
+.awards-hero-sub{font-size:.82rem;color:var(--grey);margin-top:.5rem;position:relative}
+
+.award-section-hdr{display:flex;align-items:center;gap:1rem;margin:2rem 0 1.2rem}
+.award-section-icon{font-size:2rem}
+.award-section-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:3px;color:var(--white)}
+.award-section-sub{font-size:.72rem;color:var(--grey);margin-top:2px}
+
+.player-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.2rem;margin-bottom:2rem}
+.player-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .25s;position:relative}
+.player-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 24px rgba(201,168,76,.15)}
+.player-card.leader{border-color:var(--gold)}
+.player-card.leader::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(201,168,76,.08),transparent);pointer-events:none}
+
+.player-avatar{width:100%;height:140px;display:flex;align-items:center;justify-content:center;font-size:5rem;background:linear-gradient(180deg,var(--navy-light),var(--navy));position:relative;overflow:hidden}
+.player-avatar-img{width:100%;height:100%;object-fit:cover;object-position:top}
+.player-avatar-emoji{font-size:5rem;line-height:1}
+.leader-crown{position:absolute;top:8px;right:8px;font-size:1.4rem}
+.player-info{padding:.9rem}
+.player-name{font-weight:700;font-size:.9rem;color:var(--white);margin-bottom:3px}
+.player-country{display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--grey);margin-bottom:.5rem}
+.player-country-flag{font-size:1rem}
+
+.player-stat-row{display:flex;justify-content:space-between;align-items:center;margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--border)}
+.player-stat-val{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);line-height:1}
+.player-stat-lbl{font-size:.58rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--grey)}
+
+.player-odds-bar{margin-top:.5rem}
+.player-odds-track{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-top:3px}
+.player-odds-fill{height:100%;background:linear-gradient(90deg,var(--gold-dark),var(--gold));border-radius:2px}
+.player-odds-txt{font-size:.62rem;color:var(--grey);display:flex;justify-content:space-between;margin-top:3px}
+
+/* Golden Boot Live Table */
+.boot-table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:2rem}
+.boot-table{width:100%;border-collapse:collapse}
+.boot-table th{font-size:.6rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--grey);padding:.6rem 1rem;text-align:center;border-bottom:1px solid var(--border);background:var(--navy-light)}
+.boot-table th:first-child,.boot-table td:first-child{text-align:left}
+.boot-table td{padding:.6rem 1rem;font-size:.82rem;text-align:center;border-bottom:1px solid rgba(255,255,255,.04)}
+.boot-table tr:last-child td{border-bottom:none}
+.boot-table tr:hover td{background:rgba(255,255,255,.03)}
+.boot-table tr.rank-1 td{background:rgba(201,168,76,.08)}
+.boot-rank{font-family:'Roboto Mono',monospace;font-weight:700;color:var(--grey);font-size:.78rem}
+.boot-rank-1{color:var(--gold)}
+.boot-goals{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gold)}
+.boot-assists{font-family:'Roboto Mono',monospace;font-size:.8rem;color:var(--blue)}
+.boot-player{display:flex;align-items:center;gap:8px}
+.boot-player-flag{font-size:1.1rem}
+.boot-player-name{font-weight:600}
+.boot-player-club{font-size:.68rem;color:var(--grey);margin-top:1px}
+
+.award-divider{height:1px;background:var(--border);margin:2rem 0}
+
+footer{text-align:center;padding:2rem;border-top:1px solid var(--border);font-size:.72rem;color:var(--grey);margin-top:4rem}
+@media(max-width:900px){
+  .predictor-layout{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .radar-section{grid-template-columns:1fr}
+  .bracket-page{min-width:800px}
+  .player-cards{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){.nav-tab{height:40px;font-size:.65rem;padding:0 .6rem}}
 </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-logo">FIFA 2026 PREDICTOR</div>
-        <div class="nav-live"><span class="live-dot"></span> LIVE BUILD</div>
-    </nav>
-    <div class="hero">
-        <div class="hero-eyebrow">World Cup Challenge</div>
-        <h1 class="hero-title">Predict the <span>Champion</span></h1>
+<nav>
+  <div class="nav-logo">⚽ WC26 · PREDICT</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showSection('overview')">Overview</button>
+    <button class="nav-tab" onclick="showSection('groups')">Groups</button>
+    <button class="nav-tab" onclick="showSection('bracket')">Bracket</button>
+    <button class="nav-tab" onclick="showSection('predictor')">Predictor</button>
+    <button class="nav-tab" onclick="showSection('awards')">Awards</button>
+    <button class="nav-tab" onclick="showSection('results')">Results</button>
+  </div>
+  <div class="nav-live"><div class="live-dot"></div>R32 LIVE</div>
+</nav>
+
+<!-- OVERVIEW -->
+<div id="section-overview" class="section active">
+  <div class="hero">
+    <div class="hero-eyebrow">FIFA World Cup 2026 · Predictive Analytics</div>
+    <div class="hero-title">WHO LIFTS<br><span>THE TROPHY?</span></div>
+    <p class="hero-sub">Real-time predictions powered by group stage data, Elo ratings & historical performance. Updated after every match.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">48</div><div class="lbl">Teams</div></div>
+      <div class="hero-stat"><div class="num">32</div><div class="lbl">R32 Teams</div></div>
+      <div class="hero-stat"><div class="num">104</div><div class="lbl">Total Matches</div></div>
+      <div class="hero-stat"><div class="num">Jul 19</div><div class="lbl">Final · NJ</div></div>
     </div>
+  </div>
+  <div class="container">
+    <div class="update-banner">
+      <strong>📊 Updated Jun 28:</strong> Group stage complete · R32 underway · Messi leads Golden Boot with 5 goals
+    </div>
+    <div class="sec-header"><div class="sec-title">Tournament Win Odds</div><div class="sec-badge">Model v3.2</div></div>
+    <div class="power-grid" id="power-rankings"></div>
+  </div>
+</div>
+
+<!-- GROUPS -->
+<div id="section-groups" class="section">
+  <div class="container">
+    <div class="sec-header"><div class="sec-title">Group Stage Standings</div><div class="sec-badge">Complete</div></div>
+    <div class="update-banner">
+      <strong>✅ All 12 groups complete.</strong>&nbsp;
+      <span style="color:var(--gold)">●</span> Auto qualifier &nbsp;
+      <span style="color:var(--blue)">●</span> Best 3rd place &nbsp;
+      <span style="color:var(--red)">✗</span> Eliminated
+    </div>
+    <div class="groups-grid" id="groups-container"></div>
+  </div>
+</div>
+
+<!-- BRACKET -->
+<div id="section-bracket" class="section">
+  <div class="container">
+    <div class="sec-header"><div class="sec-title">Knockout Bracket</div><div class="sec-badge">R32 Underway</div></div>
+    <div class="update-banner"><strong>🏆 Path to the Final.</strong> Results shown where played. Predicted matchups shown for later rounds based on Elo model.</div>
+    <div class="bracket-outer">
+      <div id="bracket-main" class="bracket-page"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PREDICTOR -->
+<div id="section-predictor" class="section">
+  <div class="container">
+    <div class="sec-header"><div class="sec-title">Team Analyzer</div><div class="sec-badge">Predictive Model</div></div>
+    <div class="predictor-layout">
+      <div>
+        <div class="card-title" style="margin-bottom:.8rem;font-size:.65rem;letter-spacing:2px">SELECT A TEAM</div>
+        <div class="team-select-list" id="team-select-list"></div>
+      </div>
+      <div id="analysis-panel">
+        <div style="display:flex;align-items:center;justify-content:center;height:400px;color:var(--grey);font-size:.9rem">← Select a team to see analysis</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AWARDS -->
+<div id="section-awards" class="section">
+  <div class="container">
+    <div class="awards-hero">
+      <div class="awards-hero-title">🏅 Award Predictions</div>
+      <div class="awards-hero-sub">Golden Boot · Golden Ball · Golden Glove · Young Player · Based on group stage performance & tournament odds</div>
+    </div>
+
+    <!-- GOLDEN BOOT -->
+    <div class="award-section-hdr">
+      <div class="award-section-icon">👟</div>
+      <div>
+        <div class="award-section-title">adidas Golden Boot — Top Scorer</div>
+        <div class="award-section-sub">Live standings after group stage. Ties broken by assists, then minutes played.</div>
+      </div>
+    </div>
+
+    <div class="boot-table-wrap">
+      <table class="boot-table">
+        <thead><tr>
+          <th>#</th><th>Player</th><th>Goals</th><th>Assists</th><th>Matches</th><th>Odds to Win</th>
+        </tr></thead>
+        <tbody id="boot-table-body"></tbody>
+      </table>
+    </div>
+
+    <div class="award-divider"></div>
+
+    <!-- GOLDEN BALL -->
+    <div class="award-section-hdr">
+      <div class="award-section-icon">🥇</div>
+      <div>
+        <div class="award-section-title">adidas Golden Ball — Best Player</div>
+        <div class="award-section-sub">Voted by media. Usually goes to finalist team player with standout tournament impact.</div>
+      </div>
+    </div>
+    <div class="player-cards" id="golden-ball-cards"></div>
+
+    <div class="award-divider"></div>
+
+    <!-- GOLDEN GLOVE -->
+    <div class="award-section-hdr">
+      <div class="award-section-icon">🧤</div>
+      <div>
+        <div class="award-section-title">adidas Golden Glove — Best Goalkeeper</div>
+        <div class="award-section-sub">Awarded to the tournament's top goalkeeper based on saves, clean sheets & impact.</div>
+      </div>
+    </div>
+    <div class="player-cards" id="golden-glove-cards"></div>
+
+    <div class="award-divider"></div>
+
+    <!-- BEST YOUNG PLAYER -->
+    <div class="award-section-hdr">
+      <div class="award-section-icon">⭐</div>
+      <div>
+        <div class="award-section-title">FIFA Best Young Player — Under 21</div>
+        <div class="award-section-sub">Awarded to the outstanding player born on or after January 1, 2005.</div>
+      </div>
+    </div>
+    <div class="player-cards" id="young-player-cards"></div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="section-results" class="section">
+  <div class="container">
+    <div class="sec-header"><div class="sec-title">Match Results</div><div class="sec-badge">All Matches</div></div>
+    <div class="inner-tabs">
+      <button class="inner-tab active" onclick="showResultsTab('r32')">Round of 32</button>
+      <button class="inner-tab" onclick="showResultsTab('groups')">Group Stage</button>
+    </div>
+    <div class="results-grid" id="results-container"></div>
+  </div>
+</div>
+
+<footer>
+  FIFA World Cup 2026 Predictive Model · Canada, Mexico & USA · Final: July 19, 2026, MetLife Stadium NJ<br>
+  <span style="color:var(--gold-dark)">Predictions use Elo ratings, group-stage form, historical data & fixture difficulty. Not affiliated with FIFA.</span>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════
+const T = {
+  MEX:{name:"Mexico",flag:"🇲🇽",g:"A",elo:1820,rank:12,wc:16,titles:0,pts:9,gf:6,ga:1,gd:5,q:"auto",qfp:38,sfp:22,fp:13,wp:9.2},
+  ZAF:{name:"South Africa",flag:"🇿🇦",g:"A",elo:1480,rank:62,wc:5,titles:0,pts:1,gf:1,ga:6,gd:-5,q:"auto",qfp:14,sfp:5,fp:2,wp:.8},
+  KOR:{name:"South Korea",flag:"🇰🇷",g:"A",elo:1620,rank:22,wc:10,titles:0,pts:4,gf:4,ga:3,gd:1,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  CZE:{name:"Czechia",flag:"🇨🇿",g:"A",elo:1580,rank:40,wc:9,titles:0,pts:1,gf:2,ga:5,gd:-3,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  SUI:{name:"Switzerland",flag:"🇨🇭",g:"B",elo:1700,rank:20,wc:12,titles:0,pts:7,gf:4,ga:1,gd:3,q:"auto",qfp:22,sfp:12,fp:6,wp:3.1},
+  CAN:{name:"Canada",flag:"🇨🇦",g:"B",elo:1640,rank:40,wc:2,titles:0,pts:4,gf:3,ga:2,gd:1,q:"auto",qfp:18,sfp:8,fp:3,wp:1.4},
+  BIH:{name:"Bosnia-Herz.",flag:"🇧🇦",g:"B",elo:1560,rank:62,wc:2,titles:0,pts:2,gf:1,ga:2,gd:-1,q:"3rd",qfp:12,sfp:4,fp:1,wp:.5},
+  QAT:{name:"Qatar",flag:"🇶🇦",g:"B",elo:1480,rank:58,wc:2,titles:0,pts:1,gf:0,ga:5,gd:-5,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  BRA:{name:"Brazil",flag:"🇧🇷",g:"C",elo:2050,rank:5,wc:22,titles:5,pts:7,gf:9,ga:2,gd:7,q:"auto",qfp:62,sfp:42,fp:28,wp:18.5},
+  MOR:{name:"Morocco",flag:"🇲🇦",g:"C",elo:1780,rank:14,wc:9,titles:0,pts:7,gf:4,ga:1,gd:3,q:"auto",qfp:40,sfp:22,fp:10,wp:4.8},
+  SCO:{name:"Scotland",flag:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",g:"C",elo:1620,rank:37,wc:8,titles:0,pts:3,gf:2,ga:4,gd:-2,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  HAI:{name:"Haiti",flag:"🇭🇹",g:"C",elo:1340,rank:82,wc:3,titles:0,pts:0,gf:0,ga:7,gd:-7,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  USA:{name:"United States",flag:"🇺🇸",g:"D",elo:1780,rank:13,wc:11,titles:0,pts:6,gf:8,ga:4,gd:4,q:"auto",qfp:30,sfp:16,fp:7,wp:3.2},
+  AUS:{name:"Australia",flag:"🇦🇺",g:"D",elo:1620,rank:23,wc:6,titles:0,pts:4,gf:4,ga:2,gd:2,q:"auto",qfp:20,sfp:8,fp:3,wp:1.2},
+  PAR:{name:"Paraguay",flag:"🇵🇾",g:"D",elo:1560,rank:52,wc:9,titles:0,pts:4,gf:2,ga:5,gd:-3,q:"3rd",qfp:16,sfp:5,fp:2,wp:.7},
+  TUR:{name:"Türkiye",flag:"🇹🇷",g:"D",elo:1660,rank:32,wc:5,titles:0,pts:3,gf:5,ga:6,gd:-1,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  GER:{name:"Germany",flag:"🇩🇪",g:"E",elo:2010,rank:4,wc:20,titles:4,pts:6,gf:10,ga:3,gd:7,q:"auto",qfp:55,sfp:35,fp:20,wp:13.4},
+  CIV:{name:"Ivory Coast",flag:"🇨🇮",g:"E",elo:1680,rank:40,wc:4,titles:0,pts:6,gf:3,ga:2,gd:1,q:"auto",qfp:22,sfp:9,fp:3,wp:1.1},
+  ECU:{name:"Ecuador",flag:"🇪🇨",g:"E",elo:1580,rank:45,wc:4,titles:0,pts:4,gf:2,ga:7,gd:-5,q:"3rd",qfp:14,sfp:4,fp:1,wp:.4},
+  CUW:{name:"Curaçao",flag:"🇨🇼",g:"E",elo:1320,rank:90,wc:1,titles:0,pts:1,gf:0,ga:10,gd:-10,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  NED:{name:"Netherlands",flag:"🇳🇱",g:"F",elo:1940,rank:7,wc:11,titles:0,pts:7,gf:10,ga:3,gd:7,q:"auto",qfp:50,sfp:30,fp:16,wp:9.8},
+  JPN:{name:"Japan",flag:"🇯🇵",g:"F",elo:1780,rank:18,wc:8,titles:0,pts:5,gf:7,ga:4,gd:3,q:"auto",qfp:28,sfp:13,fp:5,wp:2.1},
+  SWE:{name:"Sweden",flag:"🇸🇪",g:"F",elo:1760,rank:26,wc:12,titles:0,pts:4,gf:7,ga:3,gd:4,q:"3rd",qfp:24,sfp:10,fp:4,wp:1.5},
+  TUN:{name:"Tunisia",flag:"🇹🇳",g:"F",elo:1480,rank:55,wc:5,titles:0,pts:0,gf:1,ga:9,gd:-8,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  BEL:{name:"Belgium",flag:"🇧🇪",g:"G",elo:1880,rank:3,wc:14,titles:0,pts:7,gf:6,ga:2,gd:4,q:"auto",qfp:38,sfp:20,fp:9,wp:4.8},
+  EGY:{name:"Egypt",flag:"🇪🇬",g:"G",elo:1560,rank:52,wc:4,titles:0,pts:5,gf:5,ga:4,gd:1,q:"auto",qfp:18,sfp:6,fp:2,wp:.9},
+  IRN:{name:"Iran",flag:"🇮🇷",g:"G",elo:1620,rank:24,wc:6,titles:0,pts:3,gf:4,ga:4,gd:0,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  NZL:{name:"New Zealand",flag:"🇳🇿",g:"G",elo:1340,rank:96,wc:3,titles:0,pts:0,gf:2,ga:8,gd:-6,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  ESP:{name:"Spain",flag:"🇪🇸",g:"H",elo:2020,rank:1,wc:16,titles:1,pts:7,gf:3,ga:1,gd:2,q:"auto",qfp:55,sfp:36,fp:22,wp:14.2},
+  CPV:{name:"Cape Verde",flag:"🇨🇻",g:"H",elo:1440,rank:72,wc:1,titles:0,pts:4,gf:1,ga:1,gd:0,q:"auto",qfp:16,sfp:4,fp:1,wp:.4},
+  URU:{name:"Uruguay",flag:"🇺🇾",g:"H",elo:1820,rank:16,wc:14,titles:2,pts:3,gf:2,ga:2,gd:0,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  KSA:{name:"Saudi Arabia",flag:"🇸🇦",g:"H",elo:1520,rank:55,wc:6,titles:0,pts:1,gf:1,ga:3,gd:-2,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  FRA:{name:"France",flag:"🇫🇷",g:"I",elo:2090,rank:2,wc:16,titles:2,pts:9,gf:9,ga:1,gd:8,q:"auto",qfp:68,sfp:48,fp:30,wp:20.1},
+  NOR:{name:"Norway",flag:"🇳🇴",g:"I",elo:1740,rank:34,wc:3,titles:0,pts:3,gf:4,ga:5,gd:-1,q:"auto",qfp:28,sfp:12,fp:5,wp:1.9},
+  SEN:{name:"Senegal",flag:"🇸🇳",g:"I",elo:1680,rank:19,wc:5,titles:0,pts:3,gf:4,ga:5,gd:-1,q:"3rd",qfp:22,sfp:8,fp:3,wp:1.0},
+  IRQ:{name:"Iraq",flag:"🇮🇶",g:"I",elo:1400,rank:68,wc:2,titles:0,pts:0,gf:1,ga:8,gd:-7,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  ARG:{name:"Argentina",flag:"🇦🇷",g:"J",elo:2100,rank:2,wc:18,titles:3,pts:9,gf:11,ga:2,gd:9,q:"auto",qfp:70,sfp:52,fp:34,wp:24.3},
+  AUT:{name:"Austria",flag:"🇦🇹",g:"J",elo:1700,rank:25,wc:7,titles:0,pts:4,gf:5,ga:5,gd:0,q:"auto",qfp:22,sfp:9,fp:4,wp:1.6},
+  ALG:{name:"Algeria",flag:"🇩🇿",g:"J",elo:1660,rank:38,wc:4,titles:0,pts:4,gf:5,ga:5,gd:0,q:"3rd",qfp:18,sfp:7,fp:3,wp:1.0},
+  JOR:{name:"Jordan",flag:"🇯🇴",g:"J",elo:1380,rank:74,wc:1,titles:0,pts:0,gf:0,ga:8,gd:-8,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  COL:{name:"Colombia",flag:"🇨🇴",g:"K",elo:1800,rank:11,wc:7,titles:0,pts:7,gf:5,ga:1,gd:4,q:"auto",qfp:40,sfp:22,fp:10,wp:4.2},
+  POR:{name:"Portugal",flag:"🇵🇹",g:"K",elo:1960,rank:6,wc:8,titles:0,pts:6,gf:6,ga:2,gd:4,q:"auto",qfp:50,sfp:30,fp:16,wp:9.6},
+  CGO:{name:"DR Congo",flag:"🇨🇩",g:"K",elo:1480,rank:60,wc:4,titles:0,pts:3,gf:2,ga:4,gd:-2,q:"3rd",qfp:14,sfp:4,fp:1,wp:.5},
+  UZB:{name:"Uzbekistan",flag:"🇺🇿",g:"K",elo:1400,rank:68,wc:1,titles:0,pts:0,gf:0,ga:6,gd:-6,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+  ENG:{name:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",g:"L",elo:1980,rank:5,wc:16,titles:1,pts:7,gf:8,ga:2,gd:6,q:"auto",qfp:50,sfp:32,fp:18,wp:11.2},
+  CRO:{name:"Croatia",flag:"🇭🇷",g:"L",elo:1860,rank:10,wc:7,titles:0,pts:6,gf:5,ga:2,gd:3,q:"auto",qfp:38,sfp:20,fp:9,wp:4.5},
+  GHA:{name:"Ghana",flag:"🇬🇭",g:"L",elo:1540,rank:62,wc:4,titles:0,pts:3,gf:3,ga:4,gd:-1,q:"3rd",qfp:16,sfp:5,fp:2,wp:.6},
+  PAN:{name:"Panama",flag:"🇵🇦",g:"L",elo:1420,rank:78,wc:2,titles:0,pts:1,gf:1,ga:6,gd:-5,q:"elim",qfp:0,sfp:0,fp:0,wp:0},
+};
+
+const GROUPS_DATA = {
+  A:["MEX","ZAF","KOR","CZE"],B:["SUI","CAN","BIH","QAT"],C:["BRA","MOR","SCO","HAI"],
+  D:["USA","AUS","PAR","TUR"],E:["GER","CIV","ECU","CUW"],F:["NED","JPN","SWE","TUN"],
+  G:["BEL","EGY","IRN","NZL"],H:["ESP","CPV","URU","KSA"],I:["FRA","NOR","SEN","IRQ"],
+  J:["ARG","AUT","ALG","JOR"],K:["COL","POR","CGO","UZB"],L:["ENG","CRO","GHA","PAN"]
+};
+
+const R32 = [
+  {id:1,date:"Jun 28",venue:"SoFi, LA",h:"ZAF",a:"CAN",sh:1,sa:3,w:"CAN"},
+  {id:2,date:"Jun 29",venue:"Houston",h:"BRA",a:"JPN",sh:2,sa:1,w:"BRA"},
+  {id:3,date:"Jun 29",venue:"Boston",h:"GER",a:"PAR",sh:3,sa:1,w:"GER"},
+  {id:4,date:"Jun 29",venue:"Monterrey",h:"NED",a:"MOR",sh:1,sa:2,w:"MOR"},
+  {id:5,date:"Jun 30",venue:"Dallas",h:"CIV",a:"NOR",sh:1,sa:2,w:"NOR"},
+  {id:6,date:"Jun 30",venue:"NJ",h:"FRA",a:"SWE",sh:3,sa:1,w:"FRA"},
+  {id:7,date:"Jun 30",venue:"Mexico City",h:"MEX",a:"ECU",sh:null,sa:null,w:null},
+  {id:8,date:"Jul 1",venue:"Atlanta",h:"ENG",a:"CGO",sh:null,sa:null,w:null},
+  {id:9,date:"Jul 1",venue:"Seattle",h:"BEL",a:"SEN",sh:null,sa:null,w:null},
+  {id:10,date:"Jul 1",venue:"Santa Clara",h:"USA",a:"BIH",sh:null,sa:null,w:null},
+  {id:11,date:"Jul 2",venue:"LA",h:"ESP",a:"AUT",sh:null,sa:null,w:null},
+  {id:12,date:"Jul 2",venue:"Vancouver",h:"SUI",a:"ALG",sh:null,sa:null,w:null},
+  {id:13,date:"Jul 2",venue:"Toronto",h:"POR",a:"CRO",sh:null,sa:null,w:null},
+  {id:14,date:"Jul 3",venue:"Dallas",h:"AUS",a:"EGY",sh:null,sa:null,w:null},
+  {id:15,date:"Jul 3",venue:"Miami",h:"ARG",a:"CPV",sh:null,sa:null,w:null},
+  {id:16,date:"Jul 3",venue:"Kansas City",h:"COL",a:"GHA",sh:null,sa:null,w:null},
+];
+
+// Predicted later rounds
+const R16=[
+  {h:"BRA",a:"MOR"},{h:"GER",a:"FRA"},{h:"ARG",a:"NOR"},{h:"ESP",a:"COL"},
+  {h:"ENG",a:"USA"},{h:"POR",a:"BEL"},{h:"NED",a:"MEX"},{h:"SUI",a:"CAN"}
+];
+const QF=[{h:"BRA",a:"GER"},{h:"ARG",a:"ESP"},{h:"ENG",a:"POR"},{h:"FRA",a:"NED"}];
+const SF=[{h:"BRA",a:"ARG"},{h:"ENG",a:"FRA"}];
+const FN=[{h:"ARG",a:"FRA"}];
+
+// ── Golden Boot Live Standings ──
+const BOOT_SCORERS = [
+  {rank:1,name:"Lionel Messi",flag:"🇦🇷",country:"Argentina",emoji:"🐐",goals:5,assists:2,matches:2,odds:"+150",oddsNum:60},
+  {rank:2,name:"Kylian Mbappé",flag:"🇫🇷",country:"France",emoji:"⚡",goals:4,assists:3,matches:3,odds:"+230",oddsNum:46},
+  {rank:2,name:"Erling Haaland",flag:"🇳🇴",country:"Norway",emoji:"🦁",goals:4,assists:0,matches:2,odds:"+1800",oddsNum:18},
+  {rank:2,name:"Vinícius Jr.",flag:"🇧🇷",country:"Brazil",emoji:"💥",goals:4,assists:2,matches:3,odds:"+1400",oddsNum:22},
+  {rank:2,name:"Ousmane Dembélé",flag:"🇫🇷",country:"France",emoji:"🎯",goals:4,assists:1,matches:3,odds:"+1200",oddsNum:26},
+  {rank:6,name:"Harry Kane",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",country:"England",emoji:"👑",goals:3,assists:1,matches:3,odds:"+1200",oddsNum:26},
+  {rank:6,name:"Denis Undav",flag:"🇩🇪",country:"Germany",emoji:"🎯",goals:3,assists:2,matches:3,odds:"+3500",oddsNum:8},
+  {rank:6,name:"Jonathan David",flag:"🇨🇦",country:"Canada",emoji:"🍁",goals:3,assists:0,matches:3,odds:"+7000",oddsNum:4},
+  {rank:9,name:"Matheus Cunha",flag:"🇧🇷",country:"Brazil",emoji:"⚡",goals:2,assists:1,matches:2,odds:"+4500",oddsNum:7},
+  {rank:9,name:"Brian Brobbey",flag:"🇳🇱",country:"Netherlands",emoji:"💪",goals:2,assists:1,matches:3,odds:"+5500",oddsNum:6},
+  {rank:9,name:"Ismael Saibari",flag:"🇲🇦",country:"Morocco",emoji:"🌟",goals:2,assists:0,matches:3,odds:"+8000",oddsNum:3},
+  {rank:9,name:"Cristiano Ronaldo",flag:"🇵🇹",country:"Portugal",emoji:"🐐",goals:2,assists:1,matches:3,odds:"+3000",oddsNum:10},
+];
+
+// ── Golden Ball candidates ──
+const GOLDEN_BALL = [
+  {name:"Lionel Messi",flag:"🇦🇷",country:"Argentina",emoji:"🐐",role:"Forward",age:38,stat:"5 goals, 18 WC records",odds:"35%",oddsNum:35,leader:true,reason:"5 WC goals, all-time record scorer. Argentina's talisman in what may be his last WC. Two-time winner."},
+  {name:"Kylian Mbappé",flag:"🇫🇷",country:"France",emoji:"⚡",role:"Forward",age:27,stat:"4G 3A · France #1 seed",odds:"22%",oddsNum:22,leader:false,reason:"Lethal opener, France's No.1. 2022 runner-up for the Ball. Deep run expected."},
+  {name:"Vinícius Jr.",flag:"🇧🇷",country:"Brazil",emoji:"💥",role:"Forward",age:24,stat:"4G 2A · Man of Match x3",odds:"14%",oddsNum:14,leader:false,reason:"Man of the Match in all 3 group games. Brazil's creative engine under Ancelotti."},
+  {name:"Erling Haaland",flag:"🇳🇴",country:"Norway",emoji:"🦁",role:"Striker",age:25,stat:"4G · World Cup debut",odds:"12%",oddsNum:12,leader:false,reason:"Explosive WC debut with 4 goals. Norway's entire attack runs through him."},
+  {name:"Ousmane Dembélé",flag:"🇫🇷",country:"France",emoji:"🎯",role:"Forward",age:28,stat:"4G 1A · Hat-trick vs NOR",odds:"10%",oddsNum:10,leader:false,reason:"Reigning Ballon d'Or winner. Hat-trick vs Norway. Quietly France's most clinical."},
+  {name:"Harry Kane",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",country:"England",emoji:"👑",role:"Striker",age:32,stat:"3G 1A · Captain",odds:"7%",oddsNum:7,leader:false,reason:"500-goal club member. England captain. In unstoppable form after 61 goals for Bayern."},
+];
+
+// ── Golden Glove candidates ──
+const GOLDEN_GLOVE = [
+  {name:"Emiliano Martínez",flag:"🇦🇷",country:"Argentina",emoji:"🧤",role:"Goalkeeper",age:32,stat:"2 CS · 1 GA in 3G",odds:"30%",oddsNum:30,leader:true,reason:"Penalty-saving hero of 2022 Argentina. Commanding presence. Only 2 goals against."},
+  {name:"Mike Maignan",flag:"🇫🇷",country:"France",emoji:"🦅",role:"Goalkeeper",age:29,stat:"2 CS · France GK",odds:"28%",oddsNum:28,leader:false,reason:"World-class shot-stopper. France's wall behind their high-press. Best reflexes in the tournament."},
+  {name:"Alisson Becker",flag:"🇧🇷",country:"Brazil",emoji:"⭐",role:"Goalkeeper",age:32,stat:"1 CS · Sweeper keeper",odds:"20%",oddsNum:20,leader:false,reason:"Brazil's anchor. Distribution and reading of play elite. Could win it if Brazil go deep."},
+  {name:"Jordan Pickford",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",country:"England",emoji:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",role:"Goalkeeper",age:31,stat:"2 CS · 2 GA",odds:"12%",oddsNum:12,leader:false,reason:"England's experienced keeper. Clean sheet in opener vs Croatia. Consistent performance."},
+  {name:"Yann Sommer",flag:"🇨🇭",country:"Switzerland",emoji:"🏔️",role:"Goalkeeper",age:36,stat:"2 CS · Top saves",odds:"10%",oddsNum:10,leader:false,reason:"Veteran with 36 years of experience. Switzerland's stingy defense (1 GA) built around him."},
+];
+
+// ── Best Young Player (born on or after Jan 1 2005) ──
+const YOUNG_PLAYER = [
+  {name:"Lamine Yamal",flag:"🇪🇸",country:"Spain",emoji:"⭐",role:"Winger",age:17,born:"2007",stat:"2G 1A · Youngest star",odds:"40%",oddsNum:40,leader:true,reason:"Spain's teenage sensation. Scored in his hometown city. Direct, explosive, technically peerless at 17."},
+  {name:"Yankuba Minteh",flag:"🇬🇲",country:"Gambia (via NED)",emoji:"💫",role:"Winger",age:20,born:"2005",stat:"2G · Netherlands winger",odds:"18%",oddsNum:18,leader:false,reason:"Explosive Netherlands winger. Two goals in group stage. Brighton's breakout star at the WC."},
+  {name:"Michael Olise",flag:"🇫🇷",country:"France",emoji:"🎨",role:"Midfielder",age:23,born:"2001",stat:"3A · Creative spark",odds:"20%",oddsNum:20,leader:false,reason:"Bayern Munich's creative midfielder. 3 assists in group stage. France's second playmaker."},
+  {name:"Joao Neves",flag:"🇵🇹",country:"Portugal",emoji:"🌊",role:"Midfielder",age:20,born:"2004",stat:"1G 2A · Engine room",odds:"12%",oddsNum:12,leader:false,reason:"PSG's midfield engine. 1 goal and 2 assists in Portugal's group stage. Portugal's future."},
+  {name:"Kobbie Mainoo",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",country:"England",emoji:"⚡",role:"Midfielder",age:19,born:"2005",stat:"1G 1A · Man Utd.",odds:"10%",oddsNum:10,leader:false,reason:"England's fearless teenager. Scored vs DR Congo in R32. Growing confidence each match."},
+];
+
+function eloProb(a,b){return 1/(1+Math.pow(10,(b-a)/400))}
+
+// ══════════════════════════════════════════════
+// BRACKET RENDER — FIFA Style
+// ══════════════════════════════════════════════
+function matchEl(m, small){
+  const th=T[m.h]||{}, ta=T[m.a]||{};
+  const played=m.sh!==null&&m.sh!==undefined;
+  const hW=played&&m.w===m.h, aW=played&&m.w===m.a;
+  if(!m.h&&!m.a) return `<div class="br-match"><div class="br-tbd">TBD</div></div>`;
+  return `<div class="br-match">
+    <div class="br-match-row ${hW?'won':played?'lost':''}">
+      <span class="br-flag">${th.flag||'🏳'}</span>
+      <span class="br-name">${small?(th.name||m.h||'TBD').split(' ')[0]:(th.name||m.h||'TBD')}</span>
+      <span class="br-score">${played?m.sh:''}</span>
+    </div>
+    <div class="br-match-row ${aW?'won':played?'lost':''}">
+      <span class="br-flag">${ta.flag||'🏳'}</span>
+      <span class="br-name">${small?(ta.name||m.a||'TBD').split(' ')[0]:(ta.name||m.a||'TBD')}</span>
+      <span class="br-score">${played?m.sa:''}</span>
+    </div>
+  </div>`;
+}
+
+function renderBracket(){
+  const el=document.getElementById('bracket-main');
+  // R32 split into two halves (top 8 / bottom 8)
+  const top8=R32.slice(0,8), bot8=R32.slice(8);
+  const r16top=R16.slice(0,4), r16bot=R16.slice(4);
+  const qftop=QF.slice(0,2), qfbot=QF.slice(2);
+  const sftop=[SF[0]], sfbot=[SF[1]];
+
+  function col(title,matches,width,small){
+    return `<div class="br-round" style="width:${width}px">
+      <div class="br-round-hdr">${title}</div>
+      <div class="br-matches-col">${matches.map(m=>matchEl(m,small)).join('')}</div>
+    </div>`;
+  }
+
+  el.innerHTML=`
+  <div style="margin-bottom:.5rem;font-size:.68rem;color:var(--grey);text-align:center;letter-spacing:1px">
+    🏆 BRACKET PATHWAY TO THE FINAL · METLIFE STADIUM, EAST RUTHERFORD NJ · JULY 19
+  </div>
+  <div class="bracket-rounds-row">
+    ${col('R32 (Jun 28–30)',top8,170,true)}
+    ${col('R16 (Jul 4–5)',r16top,170,true)}
+    ${col('QF (Jul 9–10)',qftop,170,true)}
+    ${col('SF (Jul 14)',sftop,170,false)}
+    <div class="br-round" style="width:130px">
+      <div class="br-round-hdr">FINAL</div>
+      <div class="br-matches-col" style="align-items:center;justify-content:center">
+        <div class="bracket-trophy-inner">
+          <div class="bracket-trophy-icon">🏆</div>
+          <div class="bracket-trophy-lbl">Champion</div>
+          <div class="bracket-trophy-date">July 19 · NJ</div>
+          <div style="margin-top:.6rem;font-size:.7rem;color:var(--grey-light);font-weight:600">
+            ${T[FN[0].h].flag} ${T[FN[0].h].name.split(' ')[0]}<br>vs<br>${T[FN[0].a].flag} ${T[FN[0].a].name.split(' ')[0]}
+          </div>
+          <div style="font-size:.58rem;color:var(--gold);margin-top:4px">Model Prediction</div>
+        </div>
+      </div>
+    </div>
+    ${col('SF (Jul 15)',sfbot,170,false)}
+    ${col('QF (Jul 11)',qfbot,170,true)}
+    ${col('R16 (Jul 6–7)',r16bot,170,true)}
+    ${col('R32 (Jul 1–3)',bot8,170,true)}
+  </div>`;
+}
+
+// ══════════════════════════════════════════════
+// POWER RANKINGS
+// ══════════════════════════════════════════════
+function renderPower(){
+  const el=document.getElementById('power-rankings');
+  const active=Object.entries(T).filter(([k,t])=>t.wp>0).sort((a,b)=>b[1].wp-a[1].wp);
+  const max=active[0][1].wp;
+  el.innerHTML=active.map(([k,t],i)=>`
+    <div class="power-card" onclick="showTeamAnalysis('${k}')">
+      <div class="power-rank ${i<3?'top3':''}">${i+1}</div>
+      <div class="power-flag">${t.flag}</div>
+      <div class="power-info">
+        <div class="power-team">${t.name}</div>
+        <div class="power-meta">Group ${t.g} · Elo ${t.elo} · ${t.q==='auto'?'✅ Auto':t.q==='3rd'?'🔵 3rd Place':'❌ Elim'}</div>
+        <div class="power-bar-wrap"><div class="power-bar" style="width:${(t.wp/max*100).toFixed(1)}%"></div></div>
+      </div>
+      <div class="power-right">
+        <div class="power-win-pct">${t.wp}%</div>
+        <div class="power-win-lbl">Win %</div>
+      </div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════
+// GROUPS
+// ══════════════════════════════════════════════
+function renderGroups(){
+  const el=document.getElementById('groups-container');
+  el.innerHTML=Object.entries(GROUPS_DATA).map(([letter,keys])=>{
+    const sorted=[...keys].sort((a,b)=>{
+      const ta=T[a],tb=T[b];
+      if(tb.pts!==ta.pts) return tb.pts-ta.pts;
+      return tb.gd-ta.gd;
+    });
+    const rows=sorted.map((k)=>{
+      const t=T[k];
+      const q=t.q;
+      const rc=q==='auto'?'qualified':q==='3rd'?'qualified-3':'';
+      const dot=q==='auto'?'<span class="qualified-dot"></span>':q==='3rd'?'<span class="qualified-dot third"></span>':'';
+      const gd=t.gd>=0?`+${t.gd}`:t.gd;
+      return `<tr class="${rc}"><td><div class="team-cell">${dot}<span class="team-flag-emoji">${t.flag}</span><span class="team-name">${t.name}</span></div></td>
+        <td class="pts-cell">${t.pts}</td><td class="gd-cell">${gd}</td>
+        <td class="gd-cell">${t.gf}</td><td class="gd-cell">${t.ga}</td></tr>`;
+    }).join('');
+    return `<div class="group-card"><div class="group-card-head">
+      <div class="group-letter">Group ${letter}</div>
+      <div class="group-status status-complete">Complete</div></div>
+      <table class="group-table"><thead><tr>
+        <th>Team</th><th>Pts</th><th>GD</th><th>GF</th><th>GA</th>
+      </tr></thead><tbody>${rows}</tbody></table></div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+// TEAM PREDICTOR
+// ══════════════════════════════════════════════
+function renderTeamList(){
+  const el=document.getElementById('team-select-list');
+  const active=Object.entries(T).filter(([k,t])=>t.wp>0).sort((a,b)=>b[1].wp-a[1].wp);
+  const elim=Object.entries(T).filter(([k,t])=>t.wp===0).sort((a,b)=>a[1].name.localeCompare(b[1].name));
+  el.innerHTML=`
+    <div style="font-size:.58rem;font-weight:700;letter-spacing:2px;color:var(--gold);margin-bottom:4px;text-transform:uppercase">In Tournament (${active.length})</div>
+    ${active.map(([k,t])=>`<button class="team-select-btn" id="sel-${k}" onclick="showTeamAnalysis('${k}')">
+      <span style="font-size:1.1rem">${t.flag}</span><span style="flex:1">${t.name}</span>
+      <span style="font-family:'Roboto Mono',monospace;font-size:.7rem;color:var(--gold)">${t.wp}%</span></button>`).join('')}
+    <div style="font-size:.58rem;font-weight:700;letter-spacing:2px;color:var(--grey);margin:.8rem 0 4px;text-transform:uppercase">Eliminated (${elim.length})</div>
+    ${elim.map(([k,t])=>`<button class="team-select-btn" id="sel-${k}" onclick="showTeamAnalysis('${k}')" style="opacity:.5">
+      <span style="font-size:1.1rem">${t.flag}</span><span style="flex:1">${t.name}</span>
+      <span style="font-family:'Roboto Mono',monospace;font-size:.7rem;color:var(--grey)">Out</span></button>`).join('')}`;
+}
+
+function showTeamAnalysis(k){
+  const t=T[k]; if(!t) return;
+  showSection('predictor');
+  document.querySelectorAll('.team-select-btn').forEach(b=>b.classList.remove('selected'));
+  const s=document.getElementById(`sel-${k}`); if(s) s.classList.add('selected');
+  const probs=[
+    {label:"Reach Round of 16",pct:t.q!=='elim'?Math.min(98,t.qfp+26):0},
+    {label:"Reach Quarterfinals",pct:t.qfp},
+    {label:"Reach Semifinals",pct:t.sfp},
+    {label:"Reach Final",pct:t.fp},
+    {label:"Win World Cup",pct:t.wp},
+  ];
+  const attrs={
+    Attack:Math.min(98,Math.round(55+(t.elo-1400)/700*32+(t.gf||0)*1.4)),
+    Defense:Math.min(98,Math.round(62+(t.elo-1400)/700*24-(t.ga||0)*2)),
+    Form:Math.min(98,Math.round(t.q!=='elim'?48+t.pts*5+Math.max(0,t.gd)*2:18)),
+    History:Math.min(98,Math.round(28+t.wc*2.2+t.titles*9)),
+    Depth:Math.min(98,Math.round(52+(t.elo-1400)/700*32)),
+    Momentum:Math.min(98,Math.round(t.q!=='elim'?40+t.pts*6:15))
+  };
+  const panel=document.getElementById('analysis-panel');
+  panel.innerHTML=`
+    <div class="analysis-hero">
+      <div class="analysis-team-header">
+        <div class="analysis-flag">${t.flag}</div>
+        <div>
+          <div class="analysis-team-name">${t.name}</div>
+          <div class="analysis-team-sub">Group ${t.g} · FIFA #${t.rank} · Elo ${t.elo} · ${t.titles} World Cup title${t.titles!==1?'s':''}</div>
+        </div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--gold);line-height:1">${t.wp}%</div>
+          <div style="font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--grey)">Win Prob</div>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="val">${t.pts}</div><div class="lbl">Group Pts</div></div>
+        <div class="stat-box"><div class="val">${t.gf}–${t.ga}</div><div class="lbl">GF–GA</div></div>
+        <div class="stat-box"><div class="val">${t.gd>=0?'+':''}${t.gd}</div><div class="lbl">Goal Diff</div></div>
+        <div class="stat-box"><div class="val">${t.elo}</div><div class="lbl">Elo Rating</div></div>
+      </div>
+      <div class="radar-section">
+        <div>
+          <div class="card-title" style="margin-bottom:.8rem;font-size:.62rem">ADVANCEMENT PROBABILITIES</div>
+          ${probs.map(p=>`<div class="prob-row">
+            <div class="prob-label">${p.label}</div>
+            <div class="prob-bar-bg"><div class="prob-bar-fill" style="width:0%" data-w="${p.pct}"></div></div>
+            <div class="prob-pct">${p.pct}%</div></div>`).join('')}
+        </div>
+        <div>
+          <div class="card-title" style="margin-bottom:.8rem;font-size:.62rem">PERFORMANCE ATTRIBUTES</div>
+          <canvas id="radar-canvas" width="220" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem">
+      <div class="card"><div class="card-header"><div class="card-title">Model Inputs</div></div>
+        <div style="padding:1rem">
+          ${Object.entries(attrs).map(([k2,v])=>`<div class="prob-row">
+            <div class="prob-label">${k2}</div>
+            <div class="prob-bar-bg"><div class="prob-bar-fill" style="width:${v}%;background:linear-gradient(90deg,var(--navy-light),var(--blue))"></div></div>
+            <div class="prob-pct" style="color:var(--blue)">${v}</div></div>`).join('')}
+        </div>
+      </div>
+      <div class="card"><div class="card-header"><div class="card-title">H2H vs R32 Teams</div></div>
+        <div style="padding:1rem;max-height:260px;overflow-y:auto">
+          ${Object.entries(T).filter(([k2,t2])=>k2!==k&&t2.wp>0)
+            .sort((a,b)=>eloProb(t.elo,b[1].elo)-eloProb(t.elo,a[1].elo)).slice(0,14)
+            .map(([k2,t2])=>{
+              const p=eloProb(t.elo,t2.elo),pct=(p*100).toFixed(0);
+              const c=p>.6?'var(--green)':p<.4?'var(--red)':'var(--gold)';
+              return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:.76rem">
+                <span>${t2.flag}</span><span style="flex:1;color:var(--grey-light)">${t2.name}</span>
+                <span style="font-family:'Roboto Mono',monospace;font-weight:600;color:${c}">${pct}%</span></div>`;
+            }).join('')}
+        </div>
+      </div>
+    </div>`;
+  setTimeout(()=>{
+    document.querySelectorAll('.prob-bar-fill[data-w]').forEach(el=>el.style.width=el.dataset.w+'%');
+    drawRadar(attrs);
+  },80);
+}
+
+function drawRadar(attrs){
+  const c=document.getElementById('radar-canvas'); if(!c) return;
+  const ctx=c.getContext('2d');
+  const cx=110,cy=110,r=82,keys=Object.keys(attrs),n=keys.length,step=(Math.PI*2)/n;
+  ctx.clearRect(0,0,220,220);
+  for(let ring=1;ring<=4;ring++){
+    ctx.beginPath();
+    for(let i=0;i<n;i++){const a=i*step-Math.PI/2,x=cx+Math.cos(a)*r*ring/4,y=cy+Math.sin(a)*r*ring/4;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}
+    ctx.closePath();ctx.strokeStyle='rgba(201,168,76,.15)';ctx.lineWidth=1;ctx.stroke();
+  }
+  for(let i=0;i<n;i++){const a=i*step-Math.PI/2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);ctx.strokeStyle='rgba(201,168,76,.18)';ctx.stroke()}
+  ctx.beginPath();
+  keys.forEach((k,i)=>{const v=attrs[k]/100,a=i*step-Math.PI/2,x=cx+Math.cos(a)*r*v,y=cy+Math.sin(a)*r*v;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+  ctx.closePath();ctx.fillStyle='rgba(201,168,76,.22)';ctx.fill();ctx.strokeStyle='rgba(201,168,76,.8)';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#8A9BB5';ctx.font='600 9.5px Inter,sans-serif';ctx.textAlign='center';
+  keys.forEach((k,i)=>{const a=i*step-Math.PI/2,x=cx+Math.cos(a)*(r+13),y=cy+Math.sin(a)*(r+13);ctx.fillText(k,x,y+3)});
+  keys.forEach((k,i)=>{const v=attrs[k]/100,a=i*step-Math.PI/2,x=cx+Math.cos(a)*r*v,y=cy+Math.sin(a)*r*v;ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fillStyle='#E8C96A';ctx.fill()});
+}
+
+// ══════════════════════════════════════════════
+// AWARDS
+// ══════════════════════════════════════════════
+function playerCard(p,statKey,statLbl){
+  return `<div class="player-card ${p.leader?'leader':''}" title="${p.reason||''}">
+    <div class="player-avatar">
+      <div class="player-avatar-emoji">${p.emoji}</div>
+      ${p.leader?'<div class="leader-crown">👑</div>':''}
+    </div>
+    <div class="player-info">
+      <div class="player-name">${p.name}</div>
+      <div class="player-country"><span class="player-country-flag">${p.flag}</span>${p.country}</div>
+      <div style="font-size:.68rem;color:var(--grey-light);margin-bottom:.4rem">${p.stat||''}</div>
+      ${p.role?`<div style="font-size:.62rem;color:var(--blue);font-weight:600;letter-spacing:1px;text-transform:uppercase">${p.role}</div>`:''}
+      <div class="player-odds-bar">
+        <div style="display:flex;justify-content:space-between;font-size:.6rem;color:var(--grey)">
+          <span>Win Probability</span><span style="color:var(--gold);font-weight:700">${p.odds}</span>
+        </div>
+        <div class="player-odds-track"><div class="player-odds-fill" style="width:${p.oddsNum}%"></div></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderAwards(){
+  // Boot table
+  const tbody=document.getElementById('boot-table-body');
+  tbody.innerHTML=BOOT_SCORERS.map((p,i)=>`
+    <tr class="${p.rank===1?'rank-1':''}">
+      <td><span class="boot-rank ${p.rank===1?'boot-rank-1':''}">${p.rank}</span></td>
+      <td><div class="boot-player"><span class="boot-player-flag">${p.flag}</span>
+        <div><div class="boot-player-name">${p.name}</div><div class="boot-player-club">${p.country}</div></div></div></td>
+      <td><span class="boot-goals">${p.goals}</span></td>
+      <td><span class="boot-assists">${p.assists}</span></td>
+      <td style="color:var(--grey-light)">${p.matches}</td>
+      <td><span style="font-family:'Roboto Mono',monospace;font-size:.75rem;color:var(--gold)">${p.odds}</span></td>
+    </tr>`).join('');
+  document.getElementById('golden-ball-cards').innerHTML=GOLDEN_BALL.map(p=>playerCard(p)).join('');
+  document.getElementById('golden-glove-cards').innerHTML=GOLDEN_GLOVE.map(p=>playerCard(p)).join('');
+  document.getElementById('young-player-cards').innerHTML=YOUNG_PLAYER.map(p=>playerCard(p)).join('');
+}
+
+// ══════════════════════════════════════════════
+// RESULTS
+// ══════════════════════════════════════════════
+const GRP_RESULTS=[
+  {g:"A",h:"MEX",a:"ZAF",sh:2,sa:0},{g:"A",h:"KOR",a:"CZE",sh:2,sa:1},
+  {g:"A",h:"CZE",a:"ZAF",sh:1,sa:1},{g:"A",h:"MEX",a:"KOR",sh:1,sa:0},
+  {g:"A",h:"MEX",a:"CZE",sh:3,sa:0},{g:"A",h:"ZAF",a:"KOR",sh:1,sa:0},
+  {g:"B",h:"CAN",a:"BIH",sh:1,sa:1},{g:"B",h:"SUI",a:"QAT",sh:3,sa:0},
+  {g:"C",h:"BRA",a:"HAI",sh:4,sa:0},{g:"C",h:"MOR",a:"SCO",sh:1,sa:0},
+  {g:"D",h:"USA",a:"PAR",sh:4,sa:1},{g:"D",h:"AUS",a:"TUR",sh:2,sa:0},
+  {g:"D",h:"USA",a:"AUS",sh:2,sa:0},{g:"D",h:"PAR",a:"TUR",sh:1,sa:0},
+  {g:"D",h:"TUR",a:"USA",sh:3,sa:2},{g:"D",h:"PAR",a:"AUS",sh:0,sa:0},
+  {g:"E",h:"GER",a:"CUW",sh:7,sa:1},{g:"E",h:"CIV",a:"ECU",sh:1,sa:0},
+  {g:"E",h:"GER",a:"CIV",sh:2,sa:1},{g:"E",h:"ECU",a:"CUW",sh:0,sa:0},
+  {g:"E",h:"CUW",a:"CIV",sh:0,sa:2},{g:"E",h:"ECU",a:"GER",sh:2,sa:1},
+  {g:"F",h:"NED",a:"JPN",sh:2,sa:2},{g:"F",h:"SWE",a:"TUN",sh:5,sa:1},
+  {g:"F",h:"NED",a:"SWE",sh:5,sa:1},{g:"F",h:"JPN",a:"TUN",sh:4,sa:0},
+  {g:"F",h:"JPN",a:"SWE",sh:1,sa:1},{g:"F",h:"NED",a:"TUN",sh:3,sa:1},
+  {g:"G",h:"BEL",a:"EGY",sh:1,sa:1},{g:"G",h:"IRN",a:"NZL",sh:2,sa:2},
+  {g:"G",h:"BEL",a:"IRN",sh:0,sa:0},{g:"G",h:"EGY",a:"NZL",sh:3,sa:1},
+  {g:"G",h:"EGY",a:"IRN",sh:1,sa:1},{g:"G",h:"BEL",a:"NZL",sh:5,sa:1},
+  {g:"I",h:"FRA",a:"SEN",sh:3,sa:1},{g:"I",h:"NOR",a:"IRQ",sh:4,sa:1},
+  {g:"I",h:"FRA",a:"IRQ",sh:3,sa:0},{g:"I",h:"NOR",a:"SEN",sh:3,sa:2},
+];
+
+let curResultsTab='r32';
+function showResultsTab(tab){
+  curResultsTab=tab;
+  document.querySelectorAll('#section-results .inner-tab').forEach((t,i)=>t.classList.toggle('active',['r32','groups'][i]===tab));
+  renderResults();
+}
+function renderResults(){
+  const el=document.getElementById('results-container');
+  const matches=curResultsTab==='r32'?R32.map(m=>({...m,h:m.h,a:m.a,sh:m.sh,sa:m.sa,w:m.w,meta:m.date+' · '+m.venue}))
+    :GRP_RESULTS.map(m=>({h:m.h,a:m.a,sh:m.sh,sa:m.sa,w:m.sh>m.sa?m.h:m.sa>m.sh?m.a:null,meta:'Group '+m.g}));
+  el.innerHTML=matches.map(m=>{
+    const th=T[m.h]||{},ta=T[m.a]||{};
+    const played=m.sh!==null&&m.sh!==undefined;
+    const hW=played&&m.w===m.h,aW=played&&m.w===m.a;
+    return `<div class="result-match">
+      <div class="result-match-head"><span>${m.meta||''}</span><span>${played?'FT':'Upcoming'}</span></div>
+      <div class="result-teams">
+        <div class="result-team ${hW?'winner':''}">
+          <span class="result-team-flag">${th.flag||'🏳'}</span>
+          <span class="result-team-name">${th.name||m.h}</span>
+        </div>
+        ${played?`<div class="result-score"><span class="${hW?'win':''}">${m.sh}</span><span class="sep">–</span><span class="${aW?'win':''}">${m.sa}</span></div>`:
+          `<div class="result-score" style="font-size:1rem;color:var(--grey)">vs</div>`}
+        <div class="result-team right ${aW?'winner':''}">
+          <span class="result-team-name">${ta.name||m.a}</span>
+          <span class="result-team-flag">${ta.flag||'🏳'}</span>
+        </div>
+      </div>
+      ${!played&&T[m.h]&&T[m.a]?`<div class="result-tbd">Model: ${(eloProb(T[m.h].elo,T[m.a].elo)*100).toFixed(0)}% ${th.name} win</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+// NAV
+// ══════════════════════════════════════════════
+function showSection(name){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('section-'+name).classList.add('active');
+  const tabs=['overview','groups','bracket','predictor','awards','results'];
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===name));
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  renderPower();
+  renderGroups();
+  renderBracket();
+  renderTeamList();
+  renderAwards();
+  renderResults();
+});
+</script>
 </body>
 </html>
+HTMLEOF
+echo "done"
