@@ -17,16 +17,6 @@ A fully interactive, real-data predictive model for the 2026 FIFA World Cup. Bui
 
 ---
 
-## 🚀 Deploy to GitHub Pages (3 steps)
-
-1. **Create a new GitHub repository** (e.g. `wc2026-predictor`)
-2. **Upload `index.html`** to the repo root
-3. Go to **Settings → Pages → Source: Deploy from branch → main / root**
-
-Your site goes live in ~60 seconds.
-
----
-
 ## 🔢 How the Predictive Model Works
 
 The model combines four data sources:
@@ -73,18 +63,6 @@ Tournament paths are simulated through the bracket, accounting for:
 | Quarterfinals | July 9–11, 2026 |
 | Semifinals | July 14–15, 2026 |
 | **Final** | **July 19, 2026 · MetLife Stadium, NJ** |
-
----
-
-## 🏆 Model's Top 5 Predictions to Win
-
-| Team | Win % | Key Factor |
-|---|---|---|
-| 🇦🇷 Argentina | 24.3% | Highest Elo (2100), perfect group stage |
-| 🇫🇷 France | 20.1% | Best GD in group stage (+8), Elo 2090 |
-| 🇧🇷 Brazil | 18.5% | 5 titles, Elo 2050, 7-goal GD |
-| 🇪🇸 Spain | 14.2% | World #1, Elo 2020, solid defense |
-| 🇩🇪 Germany | 13.4% | 4 titles, Elo 2010, attacking firepower |
 
 ---
 
