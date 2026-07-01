@@ -1,10 +1,6 @@
 # ⚽ FIFA World Cup 2026 — Predictive Analytics Website
 
-A fully interactive, real-data predictive model for the 2026 FIFA World Cup. Built as a single HTML file — no build tools, no dependencies, works out of the box on GitHub Pages.
-
-## 🌐 Live Demo
-> Deploy to GitHub Pages and your site will be live at:  
-> `https://<your-username>.github.io/<repo-name>/`
+A fully interactive, real-data predictive model for the 2026 FIFA World Cup. Built as a single HTML file — no build tools, no dependencies.
 
 ---
 
